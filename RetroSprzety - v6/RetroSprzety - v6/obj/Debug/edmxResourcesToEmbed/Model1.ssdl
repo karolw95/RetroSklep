@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="retro_sklepModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="details">
+    <Key>
+      <PropertyRef Name="ID_DETAILS" />
+    </Key>
+    <Property Name="ID_DETAILS" Type="decimal" Precision="4" Scale="0" Nullable="false" />
+    <Property Name="ILOSC_GLOSNIKOW" Type="decimal" Precision="2" Scale="0" />
+    <Property Name="MATRYCA" Type="varchar" MaxLength="30" />
+    <Property Name="POJEMNOSC" Type="decimal" Precision="4" Scale="0" />
+    <Property Name="ILOSC_POLEK" Type="decimal" Precision="2" Scale="0" />
+    <Property Name="RODZAJ_RADIA" Type="varchar" MaxLength="30" />
+    <Property Name="OPIS" Type="text" />
+  </EntityType>
+  <EntityType Name="klienci">
+    <Key>
+      <PropertyRef Name="ID_KLIENT" />
+    </Key>
+    <Property Name="ID_KLIENT" Type="decimal" Precision="4" Scale="0" Nullable="false" />
+    <Property Name="IMIĘ" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="NAZWISKO" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ADRES" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="poz_transakcje">
+    <Key>
+      <PropertyRef Name="ID_WIERSZA" />
+    </Key>
+    <Property Name="ID_WIERSZA" Type="decimal" Precision="4" Scale="0" Nullable="false" />
+    <Property Name="ID_TRANSAKCJI" Type="decimal" Precision="4" Scale="0" />
+    <Property Name="ID_PRODUKTU" Type="decimal" Precision="4" Scale="0" />
+  </EntityType>
+  <EntityType Name="producenci">
+    <Key>
+      <PropertyRef Name="ID_PRODUCENTA" />
+    </Key>
+    <Property Name="ID_PRODUCENTA" Type="decimal" Precision="4" Scale="0" Nullable="false" />
+    <Property Name="NAZWA" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ROK_ZALOZENIA" Type="date" Nullable="false" />
+    <Property Name="CZY_AKTYWNY" Type="varchar" MaxLength="3" />
+  </EntityType>
+  <EntityType Name="produkty">
+    <Key>
+      <PropertyRef Name="ID_PRODUKTU" />
+    </Key>
+    <Property Name="ID_PRODUKTU" Type="decimal" Precision="4" Scale="0" Nullable="false" />
+    <Property Name="ID_DETAILS" Type="decimal" Precision="4" Scale="0" Nullable="false" />
+    <Property Name="NAZWA" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="TWORZYWO" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CENA" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+    <Property Name="DO_RENOWACJI" Type="varchar" MaxLength="3" />
+    <Property Name="SZEROKOSC" Type="decimal" Precision="7" Scale="2" Nullable="false" />
+    <Property Name="GŁĘBOKOSC" Type="decimal" Precision="7" Scale="2" Nullable="false" />
+    <Property Name="WYSOKOSC" Type="decimal" Precision="7" Scale="2" Nullable="false" />
+    <Property Name="ZDJECIE" Type="image" />
+    <Property Name="ROK_PRODUKCJI" Type="date" />
+    <Property Name="ID_PRODUCENTA" Type="decimal" Precision="4" Scale="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="transakcje">
+    <Key>
+      <PropertyRef Name="ID_TRANSAKCJI" />
+    </Key>
+    <Property Name="ID_TRANSAKCJI" Type="decimal" Precision="4" Scale="0" Nullable="false" />
+    <Property Name="ID_KLIENTA" Type="decimal" Precision="4" Scale="0" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'retro_sklep.dbo.dzialajacyProducenci' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="dzialajacyProducenci">
+    <Key>
+      <PropertyRef Name="NAZWA" />
+      <PropertyRef Name="PRODUCENT" />
+    </Key>
+    <Property Name="NAZWA" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="PRODUCENT" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'retro_sklep.dbo.kupionePrzedmioty' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="kupionePrzedmioty">
+    <Key>
+      <PropertyRef Name="NAZWISKO" />
+      <PropertyRef Name="NAZWA" />
+    </Key>
+    <Property Name="NAZWISKO" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="NAZWA" Type="varchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'retro_sklep.dbo.produktyDoRenowacji' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="produktyDoRenowacji">
+    <Key>
+      <PropertyRef Name="NAZWA" />
+      <PropertyRef Name="PRODUCENT" />
+    </Key>
+    <Property Name="NAZWA" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="PRODUCENT" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__transakcj__ID_KL__08EA5793">
+    <End Role="klienci" Type="Self.klienci" Multiplicity="1" />
+    <End Role="transakcje" Type="Self.transakcje" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="klienci">
+        <PropertyRef Name="ID_KLIENT" />
+      </Principal>
+      <Dependent Role="transakcje">
+        <PropertyRef Name="ID_KLIENTA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Details">
+    <End Role="details" Type="Self.details" Multiplicity="1" />
+    <End Role="produkty" Type="Self.produkty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="details">
+        <PropertyRef Name="ID_DETAILS" />
+      </Principal>
+      <Dependent Role="produkty">
+        <PropertyRef Name="ID_DETAILS" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Producent">
+    <End Role="producenci" Type="Self.producenci" Multiplicity="1" />
+    <End Role="produkty" Type="Self.produkty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="producenci">
+        <PropertyRef Name="ID_PRODUCENTA" />
+      </Principal>
+      <Dependent Role="produkty">
+        <PropertyRef Name="ID_PRODUCENTA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PRODUKT">
+    <End Role="produkty" Type="Self.produkty" Multiplicity="0..1" />
+    <End Role="poz_transakcje" Type="Self.poz_transakcje" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="produkty">
+        <PropertyRef Name="ID_PRODUKTU" />
+      </Principal>
+      <Dependent Role="poz_transakcje">
+        <PropertyRef Name="ID_PRODUKTU" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TRANAKCJA">
+    <End Role="transakcje" Type="Self.transakcje" Multiplicity="0..1" />
+    <End Role="poz_transakcje" Type="Self.poz_transakcje" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="transakcje">
+        <PropertyRef Name="ID_TRANSAKCJI" />
+      </Principal>
+      <Dependent Role="poz_transakcje">
+        <PropertyRef Name="ID_TRANSAKCJI" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="retro_sklepModelStoreContainer">
+    <EntitySet Name="details" EntityType="Self.details" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="klienci" EntityType="Self.klienci" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="poz_transakcje" EntityType="Self.poz_transakcje" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="producenci" EntityType="Self.producenci" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="produkty" EntityType="Self.produkty" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="transakcje" EntityType="Self.transakcje" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="dzialajacyProducenci" EntityType="Self.dzialajacyProducenci" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [dzialajacyProducenci].[NAZWA] AS [NAZWA], 
+    [dzialajacyProducenci].[PRODUCENT] AS [PRODUCENT]
+    FROM [dbo].[dzialajacyProducenci] AS [dzialajacyProducenci]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="kupionePrzedmioty" EntityType="Self.kupionePrzedmioty" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [kupionePrzedmioty].[NAZWISKO] AS [NAZWISKO], 
+    [kupionePrzedmioty].[NAZWA] AS [NAZWA]
+    FROM [dbo].[kupionePrzedmioty] AS [kupionePrzedmioty]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="produktyDoRenowacji" EntityType="Self.produktyDoRenowacji" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [produktyDoRenowacji].[NAZWA] AS [NAZWA], 
+    [produktyDoRenowacji].[PRODUCENT] AS [PRODUCENT]
+    FROM [dbo].[produktyDoRenowacji] AS [produktyDoRenowacji]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK__transakcj__ID_KL__08EA5793" Association="Self.FK__transakcj__ID_KL__08EA5793">
+      <End Role="klienci" EntitySet="klienci" />
+      <End Role="transakcje" EntitySet="transakcje" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Details" Association="Self.FK_Details">
+      <End Role="details" EntitySet="details" />
+      <End Role="produkty" EntitySet="produkty" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Producent" Association="Self.FK_Producent">
+      <End Role="producenci" EntitySet="producenci" />
+      <End Role="produkty" EntitySet="produkty" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PRODUKT" Association="Self.FK_PRODUKT">
+      <End Role="produkty" EntitySet="produkty" />
+      <End Role="poz_transakcje" EntitySet="poz_transakcje" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TRANAKCJA" Association="Self.FK_TRANAKCJA">
+      <End Role="transakcje" EntitySet="transakcje" />
+      <End Role="poz_transakcje" EntitySet="poz_transakcje" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="retro_sklepModelStoreContainer" CdmEntityContainer="retro_sklepEntities">
+    <EntitySetMapping Name="details">
+      <EntityTypeMapping TypeName="retro_sklepModel.details">
+        <MappingFragment StoreEntitySet="details">
+          <ScalarProperty Name="ID_DETAILS" ColumnName="ID_DETAILS" />
+          <ScalarProperty Name="ILOSC_GLOSNIKOW" ColumnName="ILOSC_GLOSNIKOW" />
+          <ScalarProperty Name="MATRYCA" ColumnName="MATRYCA" />
+          <ScalarProperty Name="POJEMNOSC" ColumnName="POJEMNOSC" />
+          <ScalarProperty Name="ILOSC_POLEK" ColumnName="ILOSC_POLEK" />
+          <ScalarProperty Name="RODZAJ_RADIA" ColumnName="RODZAJ_RADIA" />
+          <ScalarProperty Name="OPIS" ColumnName="OPIS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="klienci">
+      <EntityTypeMapping TypeName="retro_sklepModel.klienci">
+        <MappingFragment StoreEntitySet="klienci">
+          <ScalarProperty Name="ID_KLIENT" ColumnName="ID_KLIENT" />
+          <ScalarProperty Name="IMIĘ" ColumnName="IMIĘ" />
+          <ScalarProperty Name="NAZWISKO" ColumnName="NAZWISKO" />
+          <ScalarProperty Name="ADRES" ColumnName="ADRES" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="poz_transakcje">
+      <EntityTypeMapping TypeName="retro_sklepModel.poz_transakcje">
+        <MappingFragment StoreEntitySet="poz_transakcje">
+          <ScalarProperty Name="ID_WIERSZA" ColumnName="ID_WIERSZA" />
+          <ScalarProperty Name="ID_TRANSAKCJI" ColumnName="ID_TRANSAKCJI" />
+          <ScalarProperty Name="ID_PRODUKTU" ColumnName="ID_PRODUKTU" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="producenci">
+      <EntityTypeMapping TypeName="retro_sklepModel.producenci">
+        <MappingFragment StoreEntitySet="producenci">
+          <ScalarProperty Name="ID_PRODUCENTA" ColumnName="ID_PRODUCENTA" />
+          <ScalarProperty Name="NAZWA" ColumnName="NAZWA" />
+          <ScalarProperty Name="ROK_ZALOZENIA" ColumnName="ROK_ZALOZENIA" />
+          <ScalarProperty Name="CZY_AKTYWNY" ColumnName="CZY_AKTYWNY" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="produkty">
+      <EntityTypeMapping TypeName="retro_sklepModel.produkty">
+        <MappingFragment StoreEntitySet="produkty">
+          <ScalarProperty Name="ID_PRODUKTU" ColumnName="ID_PRODUKTU" />
+          <ScalarProperty Name="ID_DETAILS" ColumnName="ID_DETAILS" />
+          <ScalarProperty Name="NAZWA" ColumnName="NAZWA" />
+          <ScalarProperty Name="TWORZYWO" ColumnName="TWORZYWO" />
+          <ScalarProperty Name="CENA" ColumnName="CENA" />
+          <ScalarProperty Name="DO_RENOWACJI" ColumnName="DO_RENOWACJI" />
+          <ScalarProperty Name="SZEROKOSC" ColumnName="SZEROKOSC" />
+          <ScalarProperty Name="GŁĘBOKOSC" ColumnName="GŁĘBOKOSC" />
+          <ScalarProperty Name="WYSOKOSC" ColumnName="WYSOKOSC" />
+          <ScalarProperty Name="ZDJECIE" ColumnName="ZDJECIE" />
+          <ScalarProperty Name="ROK_PRODUKCJI" ColumnName="ROK_PRODUKCJI" />
+          <ScalarProperty Name="ID_PRODUCENTA" ColumnName="ID_PRODUCENTA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="transakcje">
+      <EntityTypeMapping TypeName="retro_sklepModel.transakcje">
+        <MappingFragment StoreEntitySet="transakcje">
+          <ScalarProperty Name="ID_TRANSAKCJI" ColumnName="ID_TRANSAKCJI" />
+          <ScalarProperty Name="ID_KLIENTA" ColumnName="ID_KLIENTA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="dzialajacyProducenci">
+      <EntityTypeMapping TypeName="retro_sklepModel.dzialajacyProducenci">
+        <MappingFragment StoreEntitySet="dzialajacyProducenci">
+          <ScalarProperty Name="NAZWA" ColumnName="NAZWA" />
+          <ScalarProperty Name="PRODUCENT" ColumnName="PRODUCENT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="kupionePrzedmioty">
+      <EntityTypeMapping TypeName="retro_sklepModel.kupionePrzedmioty">
+        <MappingFragment StoreEntitySet="kupionePrzedmioty">
+          <ScalarProperty Name="NAZWISKO" ColumnName="NAZWISKO" />
+          <ScalarProperty Name="NAZWA" ColumnName="NAZWA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="produktyDoRenowacji">
+      <EntityTypeMapping TypeName="retro_sklepModel.produktyDoRenowacji">
+        <MappingFragment StoreEntitySet="produktyDoRenowacji">
+          <ScalarProperty Name="NAZWA" ColumnName="NAZWA" />
+          <ScalarProperty Name="PRODUCENT" ColumnName="PRODUCENT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

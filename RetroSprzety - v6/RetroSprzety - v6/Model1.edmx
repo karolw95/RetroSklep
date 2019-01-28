@@ -1,0 +1,519 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="retro_sklepModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="details">
+          <Key>
+            <PropertyRef Name="ID_DETAILS" />
+          </Key>
+          <Property Name="ID_DETAILS" Type="decimal" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="ILOSC_GLOSNIKOW" Type="decimal" Precision="2" Scale="0" />
+          <Property Name="MATRYCA" Type="varchar" MaxLength="30" />
+          <Property Name="POJEMNOSC" Type="decimal" Precision="4" Scale="0" />
+          <Property Name="ILOSC_POLEK" Type="decimal" Precision="2" Scale="0" />
+          <Property Name="RODZAJ_RADIA" Type="varchar" MaxLength="30" />
+          <Property Name="OPIS" Type="text" />
+        </EntityType>
+        <EntityType Name="klienci">
+          <Key>
+            <PropertyRef Name="ID_KLIENT" />
+          </Key>
+          <Property Name="ID_KLIENT" Type="decimal" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="IMIĘ" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="NAZWISKO" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ADRES" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="poz_transakcje">
+          <Key>
+            <PropertyRef Name="ID_WIERSZA" />
+          </Key>
+          <Property Name="ID_WIERSZA" Type="decimal" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="ID_TRANSAKCJI" Type="decimal" Precision="4" Scale="0" />
+          <Property Name="ID_PRODUKTU" Type="decimal" Precision="4" Scale="0" />
+        </EntityType>
+        <EntityType Name="producenci">
+          <Key>
+            <PropertyRef Name="ID_PRODUCENTA" />
+          </Key>
+          <Property Name="ID_PRODUCENTA" Type="decimal" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="NAZWA" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ROK_ZALOZENIA" Type="date" Nullable="false" />
+          <Property Name="CZY_AKTYWNY" Type="varchar" MaxLength="3" />
+        </EntityType>
+        <EntityType Name="produkty">
+          <Key>
+            <PropertyRef Name="ID_PRODUKTU" />
+          </Key>
+          <Property Name="ID_PRODUKTU" Type="decimal" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="ID_DETAILS" Type="decimal" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="NAZWA" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="TWORZYWO" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="CENA" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="DO_RENOWACJI" Type="varchar" MaxLength="3" />
+          <Property Name="SZEROKOSC" Type="decimal" Precision="7" Scale="2" Nullable="false" />
+          <Property Name="GŁĘBOKOSC" Type="decimal" Precision="7" Scale="2" Nullable="false" />
+          <Property Name="WYSOKOSC" Type="decimal" Precision="7" Scale="2" Nullable="false" />
+          <Property Name="ZDJECIE" Type="image" />
+          <Property Name="ROK_PRODUKCJI" Type="date" />
+          <Property Name="ID_PRODUCENTA" Type="decimal" Precision="4" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="transakcje">
+          <Key>
+            <PropertyRef Name="ID_TRANSAKCJI" />
+          </Key>
+          <Property Name="ID_TRANSAKCJI" Type="decimal" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="ID_KLIENTA" Type="decimal" Precision="4" Scale="0" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'retro_sklep.dbo.dzialajacyProducenci' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="dzialajacyProducenci">
+          <Key>
+            <PropertyRef Name="NAZWA" />
+            <PropertyRef Name="PRODUCENT" />
+          </Key>
+          <Property Name="NAZWA" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="PRODUCENT" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'retro_sklep.dbo.kupionePrzedmioty' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="kupionePrzedmioty">
+          <Key>
+            <PropertyRef Name="NAZWISKO" />
+            <PropertyRef Name="NAZWA" />
+          </Key>
+          <Property Name="NAZWISKO" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="NAZWA" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'retro_sklep.dbo.produktyDoRenowacji' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="produktyDoRenowacji">
+          <Key>
+            <PropertyRef Name="NAZWA" />
+            <PropertyRef Name="PRODUCENT" />
+          </Key>
+          <Property Name="NAZWA" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="PRODUCENT" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__transakcj__ID_KL__08EA5793">
+          <End Role="klienci" Type="Self.klienci" Multiplicity="1" />
+          <End Role="transakcje" Type="Self.transakcje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="klienci">
+              <PropertyRef Name="ID_KLIENT" />
+            </Principal>
+            <Dependent Role="transakcje">
+              <PropertyRef Name="ID_KLIENTA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Details">
+          <End Role="details" Type="Self.details" Multiplicity="1" />
+          <End Role="produkty" Type="Self.produkty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="details">
+              <PropertyRef Name="ID_DETAILS" />
+            </Principal>
+            <Dependent Role="produkty">
+              <PropertyRef Name="ID_DETAILS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Producent">
+          <End Role="producenci" Type="Self.producenci" Multiplicity="1" />
+          <End Role="produkty" Type="Self.produkty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="producenci">
+              <PropertyRef Name="ID_PRODUCENTA" />
+            </Principal>
+            <Dependent Role="produkty">
+              <PropertyRef Name="ID_PRODUCENTA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUKT">
+          <End Role="produkty" Type="Self.produkty" Multiplicity="0..1" />
+          <End Role="poz_transakcje" Type="Self.poz_transakcje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="produkty">
+              <PropertyRef Name="ID_PRODUKTU" />
+            </Principal>
+            <Dependent Role="poz_transakcje">
+              <PropertyRef Name="ID_PRODUKTU" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TRANAKCJA">
+          <End Role="transakcje" Type="Self.transakcje" Multiplicity="0..1" />
+          <End Role="poz_transakcje" Type="Self.poz_transakcje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="transakcje">
+              <PropertyRef Name="ID_TRANSAKCJI" />
+            </Principal>
+            <Dependent Role="poz_transakcje">
+              <PropertyRef Name="ID_TRANSAKCJI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="retro_sklepModelStoreContainer">
+          <EntitySet Name="details" EntityType="Self.details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="klienci" EntityType="Self.klienci" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="poz_transakcje" EntityType="Self.poz_transakcje" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="producenci" EntityType="Self.producenci" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="produkty" EntityType="Self.produkty" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="transakcje" EntityType="Self.transakcje" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dzialajacyProducenci" EntityType="Self.dzialajacyProducenci" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [dzialajacyProducenci].[NAZWA] AS [NAZWA], 
+    [dzialajacyProducenci].[PRODUCENT] AS [PRODUCENT]
+    FROM [dbo].[dzialajacyProducenci] AS [dzialajacyProducenci]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="kupionePrzedmioty" EntityType="Self.kupionePrzedmioty" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [kupionePrzedmioty].[NAZWISKO] AS [NAZWISKO], 
+    [kupionePrzedmioty].[NAZWA] AS [NAZWA]
+    FROM [dbo].[kupionePrzedmioty] AS [kupionePrzedmioty]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="produktyDoRenowacji" EntityType="Self.produktyDoRenowacji" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [produktyDoRenowacji].[NAZWA] AS [NAZWA], 
+    [produktyDoRenowacji].[PRODUCENT] AS [PRODUCENT]
+    FROM [dbo].[produktyDoRenowacji] AS [produktyDoRenowacji]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__transakcj__ID_KL__08EA5793" Association="Self.FK__transakcj__ID_KL__08EA5793">
+            <End Role="klienci" EntitySet="klienci" />
+            <End Role="transakcje" EntitySet="transakcje" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Details" Association="Self.FK_Details">
+            <End Role="details" EntitySet="details" />
+            <End Role="produkty" EntitySet="produkty" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Producent" Association="Self.FK_Producent">
+            <End Role="producenci" EntitySet="producenci" />
+            <End Role="produkty" EntitySet="produkty" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUKT" Association="Self.FK_PRODUKT">
+            <End Role="produkty" EntitySet="produkty" />
+            <End Role="poz_transakcje" EntitySet="poz_transakcje" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TRANAKCJA" Association="Self.FK_TRANAKCJA">
+            <End Role="transakcje" EntitySet="transakcje" />
+            <End Role="poz_transakcje" EntitySet="poz_transakcje" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="retro_sklepModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="details">
+          <Key>
+            <PropertyRef Name="ID_DETAILS" />
+          </Key>
+          <Property Name="ID_DETAILS" Type="Decimal" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="ILOSC_GLOSNIKOW" Type="Decimal" Precision="2" Scale="0" />
+          <Property Name="MATRYCA" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="POJEMNOSC" Type="Decimal" Precision="4" Scale="0" />
+          <Property Name="ILOSC_POLEK" Type="Decimal" Precision="2" Scale="0" />
+          <Property Name="RODZAJ_RADIA" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="OPIS" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="produkty" Relationship="Self.FK_Details" FromRole="details" ToRole="produkty" />
+        </EntityType>
+        <EntityType Name="klienci">
+          <Key>
+            <PropertyRef Name="ID_KLIENT" />
+          </Key>
+          <Property Name="ID_KLIENT" Type="Decimal" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="IMIĘ" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NAZWISKO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ADRES" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="transakcje" Relationship="Self.FK__transakcj__ID_KL__08EA5793" FromRole="klienci" ToRole="transakcje" />
+        </EntityType>
+        <EntityType Name="poz_transakcje">
+          <Key>
+            <PropertyRef Name="ID_WIERSZA" />
+          </Key>
+          <Property Name="ID_WIERSZA" Type="Decimal" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="ID_TRANSAKCJI" Type="Decimal" Precision="4" Scale="0" />
+          <Property Name="ID_PRODUKTU" Type="Decimal" Precision="4" Scale="0" />
+          <NavigationProperty Name="produkty" Relationship="Self.FK_PRODUKT" FromRole="poz_transakcje" ToRole="produkty" />
+          <NavigationProperty Name="transakcje" Relationship="Self.FK_TRANAKCJA" FromRole="poz_transakcje" ToRole="transakcje" />
+        </EntityType>
+        <EntityType Name="producenci">
+          <Key>
+            <PropertyRef Name="ID_PRODUCENTA" />
+          </Key>
+          <Property Name="ID_PRODUCENTA" Type="Decimal" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="NAZWA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ROK_ZALOZENIA" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CZY_AKTYWNY" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="produkty" Relationship="Self.FK_Producent" FromRole="producenci" ToRole="produkty" />
+        </EntityType>
+        <EntityType Name="produkty">
+          <Key>
+            <PropertyRef Name="ID_PRODUKTU" />
+          </Key>
+          <Property Name="ID_PRODUKTU" Type="Decimal" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="ID_DETAILS" Type="Decimal" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="NAZWA" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TWORZYWO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CENA" Type="Decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="DO_RENOWACJI" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="SZEROKOSC" Type="Decimal" Precision="7" Scale="2" Nullable="false" />
+          <Property Name="GŁĘBOKOSC" Type="Decimal" Precision="7" Scale="2" Nullable="false" />
+          <Property Name="WYSOKOSC" Type="Decimal" Precision="7" Scale="2" Nullable="false" />
+          <Property Name="ZDJECIE" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="ROK_PRODUKCJI" Type="DateTime" Precision="0" />
+          <Property Name="ID_PRODUCENTA" Type="Decimal" Precision="4" Scale="0" Nullable="false" />
+          <NavigationProperty Name="details" Relationship="Self.FK_Details" FromRole="produkty" ToRole="details" />
+          <NavigationProperty Name="poz_transakcje" Relationship="Self.FK_PRODUKT" FromRole="produkty" ToRole="poz_transakcje" />
+          <NavigationProperty Name="producenci" Relationship="Self.FK_Producent" FromRole="produkty" ToRole="producenci" />
+        </EntityType>
+        <EntityType Name="transakcje">
+          <Key>
+            <PropertyRef Name="ID_TRANSAKCJI" />
+          </Key>
+          <Property Name="ID_TRANSAKCJI" Type="Decimal" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="ID_KLIENTA" Type="Decimal" Precision="4" Scale="0" Nullable="false" />
+          <NavigationProperty Name="klienci" Relationship="Self.FK__transakcj__ID_KL__08EA5793" FromRole="transakcje" ToRole="klienci" />
+          <NavigationProperty Name="poz_transakcje" Relationship="Self.FK_TRANAKCJA" FromRole="transakcje" ToRole="poz_transakcje" />
+        </EntityType>
+        <EntityType Name="dzialajacyProducenci">
+          <Key>
+            <PropertyRef Name="NAZWA" />
+            <PropertyRef Name="PRODUCENT" />
+          </Key>
+          <Property Name="NAZWA" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PRODUCENT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="kupionePrzedmioty">
+          <Key>
+            <PropertyRef Name="NAZWISKO" />
+            <PropertyRef Name="NAZWA" />
+          </Key>
+          <Property Name="NAZWISKO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NAZWA" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="produktyDoRenowacji">
+          <Key>
+            <PropertyRef Name="NAZWA" />
+            <PropertyRef Name="PRODUCENT" />
+          </Key>
+          <Property Name="NAZWA" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PRODUCENT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Details">
+          <End Role="details" Type="Self.details" Multiplicity="1" />
+          <End Role="produkty" Type="Self.produkty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="details">
+              <PropertyRef Name="ID_DETAILS" />
+            </Principal>
+            <Dependent Role="produkty">
+              <PropertyRef Name="ID_DETAILS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__transakcj__ID_KL__08EA5793">
+          <End Role="klienci" Type="Self.klienci" Multiplicity="1" />
+          <End Role="transakcje" Type="Self.transakcje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="klienci">
+              <PropertyRef Name="ID_KLIENT" />
+            </Principal>
+            <Dependent Role="transakcje">
+              <PropertyRef Name="ID_KLIENTA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUKT">
+          <End Role="produkty" Type="Self.produkty" Multiplicity="0..1" />
+          <End Role="poz_transakcje" Type="Self.poz_transakcje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="produkty">
+              <PropertyRef Name="ID_PRODUKTU" />
+            </Principal>
+            <Dependent Role="poz_transakcje">
+              <PropertyRef Name="ID_PRODUKTU" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TRANAKCJA">
+          <End Role="transakcje" Type="Self.transakcje" Multiplicity="0..1" />
+          <End Role="poz_transakcje" Type="Self.poz_transakcje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="transakcje">
+              <PropertyRef Name="ID_TRANSAKCJI" />
+            </Principal>
+            <Dependent Role="poz_transakcje">
+              <PropertyRef Name="ID_TRANSAKCJI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Producent">
+          <End Role="producenci" Type="Self.producenci" Multiplicity="1" />
+          <End Role="produkty" Type="Self.produkty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="producenci">
+              <PropertyRef Name="ID_PRODUCENTA" />
+            </Principal>
+            <Dependent Role="produkty">
+              <PropertyRef Name="ID_PRODUCENTA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="retro_sklepEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="details" EntityType="Self.details" />
+          <EntitySet Name="klienci" EntityType="Self.klienci" />
+          <EntitySet Name="poz_transakcje" EntityType="Self.poz_transakcje" />
+          <EntitySet Name="producenci" EntityType="Self.producenci" />
+          <EntitySet Name="produkty" EntityType="Self.produkty" />
+          <EntitySet Name="transakcje" EntityType="Self.transakcje" />
+          <EntitySet Name="dzialajacyProducenci" EntityType="Self.dzialajacyProducenci" />
+          <EntitySet Name="kupionePrzedmioty" EntityType="Self.kupionePrzedmioty" />
+          <EntitySet Name="produktyDoRenowacji" EntityType="Self.produktyDoRenowacji" />
+          <AssociationSet Name="FK_Details" Association="Self.FK_Details">
+            <End Role="details" EntitySet="details" />
+            <End Role="produkty" EntitySet="produkty" />
+          </AssociationSet>
+          <AssociationSet Name="FK__transakcj__ID_KL__08EA5793" Association="Self.FK__transakcj__ID_KL__08EA5793">
+            <End Role="klienci" EntitySet="klienci" />
+            <End Role="transakcje" EntitySet="transakcje" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUKT" Association="Self.FK_PRODUKT">
+            <End Role="produkty" EntitySet="produkty" />
+            <End Role="poz_transakcje" EntitySet="poz_transakcje" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TRANAKCJA" Association="Self.FK_TRANAKCJA">
+            <End Role="transakcje" EntitySet="transakcje" />
+            <End Role="poz_transakcje" EntitySet="poz_transakcje" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Producent" Association="Self.FK_Producent">
+            <End Role="producenci" EntitySet="producenci" />
+            <End Role="produkty" EntitySet="produkty" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="retro_sklepModelStoreContainer" CdmEntityContainer="retro_sklepEntities">
+          <EntitySetMapping Name="details">
+            <EntityTypeMapping TypeName="retro_sklepModel.details">
+              <MappingFragment StoreEntitySet="details">
+                <ScalarProperty Name="ID_DETAILS" ColumnName="ID_DETAILS" />
+                <ScalarProperty Name="ILOSC_GLOSNIKOW" ColumnName="ILOSC_GLOSNIKOW" />
+                <ScalarProperty Name="MATRYCA" ColumnName="MATRYCA" />
+                <ScalarProperty Name="POJEMNOSC" ColumnName="POJEMNOSC" />
+                <ScalarProperty Name="ILOSC_POLEK" ColumnName="ILOSC_POLEK" />
+                <ScalarProperty Name="RODZAJ_RADIA" ColumnName="RODZAJ_RADIA" />
+                <ScalarProperty Name="OPIS" ColumnName="OPIS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="klienci">
+            <EntityTypeMapping TypeName="retro_sklepModel.klienci">
+              <MappingFragment StoreEntitySet="klienci">
+                <ScalarProperty Name="ID_KLIENT" ColumnName="ID_KLIENT" />
+                <ScalarProperty Name="IMIĘ" ColumnName="IMIĘ" />
+                <ScalarProperty Name="NAZWISKO" ColumnName="NAZWISKO" />
+                <ScalarProperty Name="ADRES" ColumnName="ADRES" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="poz_transakcje">
+            <EntityTypeMapping TypeName="retro_sklepModel.poz_transakcje">
+              <MappingFragment StoreEntitySet="poz_transakcje">
+                <ScalarProperty Name="ID_WIERSZA" ColumnName="ID_WIERSZA" />
+                <ScalarProperty Name="ID_TRANSAKCJI" ColumnName="ID_TRANSAKCJI" />
+                <ScalarProperty Name="ID_PRODUKTU" ColumnName="ID_PRODUKTU" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="producenci">
+            <EntityTypeMapping TypeName="retro_sklepModel.producenci">
+              <MappingFragment StoreEntitySet="producenci">
+                <ScalarProperty Name="ID_PRODUCENTA" ColumnName="ID_PRODUCENTA" />
+                <ScalarProperty Name="NAZWA" ColumnName="NAZWA" />
+                <ScalarProperty Name="ROK_ZALOZENIA" ColumnName="ROK_ZALOZENIA" />
+                <ScalarProperty Name="CZY_AKTYWNY" ColumnName="CZY_AKTYWNY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="produkty">
+            <EntityTypeMapping TypeName="retro_sklepModel.produkty">
+              <MappingFragment StoreEntitySet="produkty">
+                <ScalarProperty Name="ID_PRODUKTU" ColumnName="ID_PRODUKTU" />
+                <ScalarProperty Name="ID_DETAILS" ColumnName="ID_DETAILS" />
+                <ScalarProperty Name="NAZWA" ColumnName="NAZWA" />
+                <ScalarProperty Name="TWORZYWO" ColumnName="TWORZYWO" />
+                <ScalarProperty Name="CENA" ColumnName="CENA" />
+                <ScalarProperty Name="DO_RENOWACJI" ColumnName="DO_RENOWACJI" />
+                <ScalarProperty Name="SZEROKOSC" ColumnName="SZEROKOSC" />
+                <ScalarProperty Name="GŁĘBOKOSC" ColumnName="GŁĘBOKOSC" />
+                <ScalarProperty Name="WYSOKOSC" ColumnName="WYSOKOSC" />
+                <ScalarProperty Name="ZDJECIE" ColumnName="ZDJECIE" />
+                <ScalarProperty Name="ROK_PRODUKCJI" ColumnName="ROK_PRODUKCJI" />
+                <ScalarProperty Name="ID_PRODUCENTA" ColumnName="ID_PRODUCENTA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="transakcje">
+            <EntityTypeMapping TypeName="retro_sklepModel.transakcje">
+              <MappingFragment StoreEntitySet="transakcje">
+                <ScalarProperty Name="ID_TRANSAKCJI" ColumnName="ID_TRANSAKCJI" />
+                <ScalarProperty Name="ID_KLIENTA" ColumnName="ID_KLIENTA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dzialajacyProducenci">
+            <EntityTypeMapping TypeName="retro_sklepModel.dzialajacyProducenci">
+              <MappingFragment StoreEntitySet="dzialajacyProducenci">
+                <ScalarProperty Name="NAZWA" ColumnName="NAZWA" />
+                <ScalarProperty Name="PRODUCENT" ColumnName="PRODUCENT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="kupionePrzedmioty">
+            <EntityTypeMapping TypeName="retro_sklepModel.kupionePrzedmioty">
+              <MappingFragment StoreEntitySet="kupionePrzedmioty">
+                <ScalarProperty Name="NAZWISKO" ColumnName="NAZWISKO" />
+                <ScalarProperty Name="NAZWA" ColumnName="NAZWA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="produktyDoRenowacji">
+            <EntityTypeMapping TypeName="retro_sklepModel.produktyDoRenowacji">
+              <MappingFragment StoreEntitySet="produktyDoRenowacji">
+                <ScalarProperty Name="NAZWA" ColumnName="NAZWA" />
+                <ScalarProperty Name="PRODUCENT" ColumnName="PRODUCENT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
